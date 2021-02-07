@@ -114,10 +114,13 @@ $padding: 5rem;
     }
   }
 
-  &:hover,
-  &:focus {
+  &:hover {
     opacity: 1;
     transform: translateY(-0.5px);
+  }
+
+  &:focus {
+    outline: 1px solid $color-white;  
   }
 }
 

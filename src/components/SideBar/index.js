@@ -6,9 +6,24 @@ import { FaTimes } from "react-icons/fa";
 import "./style.scss";
 import { IconContext } from "react-icons/lib";
 
-const SideBar = ({setQuery, search}) => {
+const SideBar = ({ weatherData, setQuery, search, query }) => {
   const sidebar = useRef();
   const [open, setOpen] = useState(false);
+  const [weatherDetails, setWeatherDetails] = useState({
+    cloud: 0,
+    humidity: 0,
+    wind: 0,
+  });
+  console.log(weatherData);
+
+  // Set weather details
+  useEffect(() => {
+    setWeatherDetails({
+      cloud: weatherData.clouds && weatherData.clouds.all,
+      wind: weatherData.wind && weatherData.wind.speed,
+      humidity: weatherData.main && weatherData.main.humidity,
+    });
+  }, [weatherData]);
 
   // Close on click off
   useEffect(() => {
@@ -46,6 +61,8 @@ const SideBar = ({setQuery, search}) => {
       </div>
       <section
         className={`side-bar ${!open && "side-bar--closed"}`}
+        disabled={!open && true}
+        tabIndex={!open ? -1 : ""}
         ref={sidebar}>
         <div
           className={`side-bar__content ${
@@ -70,6 +87,7 @@ const SideBar = ({setQuery, search}) => {
             <input
               className="search__input"
               type="text"
+              value={query}
               placeholder="Cambridge, UK"
               onChange={(e) => setQuery(e.target.value)}
               onKeyPress={search}
@@ -88,15 +106,21 @@ const SideBar = ({setQuery, search}) => {
             </h3>
             <div className="weather-details__detail">
               <div className="weather-details__detail--title">Cloud</div>
-              <div className="weather-details__detail--value">86%</div>
+              <div className="weather-details__detail--value">
+                {weatherDetails.cloud}%
+              </div>
             </div>
             <div className="weather-details__detail">
               <div className="weather-details__detail--title">Humidity</div>
-              <div className="weather-details__detail--value">62%</div>
+              <div className="weather-details__detail--value">
+                {weatherDetails.humidity}%
+              </div>
             </div>
             <div className="weather-details__detail">
               <div className="weather-details__detail--title">Wind</div>
-              <div className="weather-details__detail--value">8km/h</div>
+              <div className="weather-details__detail--value">
+                {weatherDetails.wind}km/h
+              </div>
             </div>
           </div>
           <div className="weather-details">

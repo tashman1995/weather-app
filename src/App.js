@@ -13,15 +13,6 @@ const api = {
 function App() {
   const [location, setLocation] = useState("Loading...");
   const [longLat, setLongLat] = useState([0.121817, 52.205338]);
-  const [temp, setTemp] = useState({ min: 0, max: 0, average: 0 });
-  const [weatherType, setWeatherType] = useState("loading");
-  const [sunPosition, setSunPosition] = useState({
-    sunrise: 0,
-    sunset: 0,
-  });
-  const date = new Date();
-  const timeSeconds = date.getTime();
-  const [time, setTime] = useState(timeSeconds);
 
   const [query, setQuery] = useState("Cambridge");
   const [weather, setWeather] = useState({});
@@ -33,22 +24,20 @@ function App() {
         fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
           .then((res) => res.json())
           .then((result) => {
-            const { main, weather } = result;
-            setTemp({
-              min: Math.round(main.temp),
-              max: Math.round(main.temp_max),
-              average: Math.round(main.temp_min),
-            });
-            setWeatherType(weather[0].main);
-            console.log(result);
-            setWeather(result);
-            setLocation(result.name);
-            setQuery("");
+            updateResults(result);
           });
       }
     }
   };
-  // Initial Fetch
+
+  // Handle updating state with search results
+  const updateResults = (result) => {
+    setWeather(result);
+    setLocation(result.name);
+    setQuery("");
+  };
+
+  // Initial Fetch using geolocation
   useEffect(() => {
     const getCurrentPosition = (options = {}) => {
       return new Promise((accept, reject) => {
@@ -69,7 +58,7 @@ function App() {
         };
         const position = await getCurrentPosition(options);
         const { longitude, latitude } = position.coords;
-        setLongLat([longitude, latitude])
+        setLongLat([longitude, latitude]);
 
         const positionDetails = await axios.get(
           "http://www.mapquestapi.com/geocoding/v1/reverse",
@@ -80,127 +69,33 @@ function App() {
             },
           }
         );
-        const location =
-          positionDetails.data.results[0].locations[0].adminArea5;
-        setLocation(location);
-        search()
+
+        setLocation(positionDetails.data.results[0].locations[0].adminArea5);
       } catch (err) {
         console.log(err.message);
       }
     };
 
     loadPosition();
-    // fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
+
     fetch(
       `${api.base}weather?lat=${longLat[1]}&lon=${longLat[0]}&units=metric&appid=${api.key}`
     )
       .then((res) => res.json())
       .then((result) => {
-        const { main, weather } = result;
-        setTemp({
-          min: Math.round(main.temp),
-          max: Math.round(main.temp_max),
-          average: Math.round(main.temp_min),
-        });
-        setWeatherType(weather[0].main);
-        console.log(result);
-        setWeather(result);
-        setLocation(result.name);
-        setQuery("");
-        // console.log(result);
+        updateResults(result);
       });
   }, []);
 
-  // Calculate Users Current Position
-  // useEffect(() => {
-  //   const getCurrentPosition = (options = {}) => {
-  //     return new Promise((accept, reject) => {
-  //       window.navigator.geolocation.getCurrentPosition(
-  //         accept,
-  //         reject,
-  //         options
-  //       );
-  //     });
-  //   };
-
-  //   const loadPosition = async () => {
-  //     try {
-  //       const options = {
-  //         enableHighAccuracy: true,
-  //         timeout: 5000,
-  //         maximumAge: 0,
-  //       };
-  //       const position = await getCurrentPosition(options);
-  //       const { longitude, latitude } = position.coords;
-
-  //       const positionDetails = await axios.get(
-  //         "http://www.mapquestapi.com/geocoding/v1/reverse",
-  //         {
-  //           params: {
-  //             location: `${latitude}, ${longitude}`,
-  //             key: "AmAsAiGQhuAM4MBV3mTj4HMYEWRXKym5",
-  //           },
-  //         }
-  //       );
-  //       const location =
-  //         positionDetails.data.results[0].locations[0].adminArea5;
-  //       setLocation(location);
-  //       search()
-  //     } catch (err) {
-  //       console.log(err.message);
-  //     }
-  //   };
-
-  //   loadPosition();
-  //   search(null);
-  // }, []);
-
-  // // GET weather from geolocation
-  // useEffect(() => {
-  //   console.log('get weather')
-  //   const getWeather = async () => {
-  //     const currentWeather = await axios.get(
-  //       "http://api.openweathermap.org/data/2.5/weather",
-  //       {
-  //         params: {
-  //           lat: longLat[1],
-  //           lon: longLat[0],
-  //           appid: "cd0eab9c6099bca2b4ec4c682921bd2c",
-  //           units: "metric",
-  //         },
-  //       }
-  //     );
-
-  //     const weatherData = currentWeather.data;
-
-  //     const { main, weather } = weatherData;
-  //     const { temp, temp_min, temp_max } = main;
-
-  //     setWeatherType(weather[0].main);
-  //     setTemp({
-  //       min: Math.round(temp_min),
-  //       max: Math.round(temp_max),
-  //       average: Math.round(temp),
-  //     });
-  //     setSunPosition({
-  //       sunrise: weatherData.sys.sunrise,
-  //       sunset: weatherData.sys.sunset,
-  //     });
-  //   };
-
-  //   getWeather();
-  // }, [longLat]);
-
   return (
     <div className="App">
-      <HeroSection
-        weather={weather}
-        location={location}
-        temp={temp}
-        weatherType={weatherType}
-        time={time}
+      <HeroSection weatherData={weather} location={location} />
+      <SideBar
+        weatherData={weather}
+        setQuery={setQuery}
+        search={search}
+        query={query}
       />
-      <SideBar setQuery={setQuery} search={search} />
     </div>
   );
 }

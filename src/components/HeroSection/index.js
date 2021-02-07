@@ -52,18 +52,21 @@ const HeroSection = ({ weatherData, location }) => {
       const diff = Math.round((sunset - time) / 60 / 60);
       setSunText(`Sunset is ${diff} hours away`);
       setDaytime("day");
+     
     } else if (time > sunset) {
       // After Sunset
       const diff = Math.round((time - sunset) / 60 / 60);
       setSunText(`Sunset was ${diff} hours ago`);
       setDaytime("night");
+     
     } else {
       // Before Sunrise
       const diff = Math.round((sunrise - time) / 60 / 60);
       setSunText(`Sunrise is ${diff} hours away`);
       setDaytime("night");
+     
     }
-  }, [sunPosition, date, timeZoneDiff]);
+  }, [weatherData, sunPosition, date, timeZoneDiff]);
 
   return (
     <section className="hero">
@@ -75,7 +78,7 @@ const HeroSection = ({ weatherData, location }) => {
         sunText={sunText}
         date={date}
       />
-      <HeroImage weatherType={weatherType} daytime={daytime}/>
+      <HeroImage weatherType={weatherType} daytime={daytime} />
     </section>
   );
 };

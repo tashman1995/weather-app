@@ -144,60 +144,8 @@ const HeroImage = ({ weatherType, daytime }) => {
     </div>
   );
 
-  // return transitions.map(({ item, props, key }) => (
-  //   <Fragment>
-  //     {/* <img alt="" src={clearDay} /> */}
-  //     <animated.div
-  //       key={key}
-  //       className="image"
-
-  //       style={{
-  //         ...props,
-  //         backgroundImage: "url(" + item.image + ")",
-  //       }}
-  //     />
-  //   </Fragment>
-  // ));
 };
 
 export default HeroImage;
 
-//  const weatherImagesArray = [
-//    { weather: "clear", image: daytime ? clearDay : clearNight },
-//    {
-//      weather: "fewclouds",
-//      image: daytime ? lightCloudDay : cloudyNight,
-//    },
-//    {
-//      weather: "clouds",
-//      image: daytime ? cloudyDay : cloudyNight,
-//    },
-//    {
-//      weather: "scatteredclouds",
-//      image: daytime ? lightCloudDay : cloudyNight,
-//    },
-//    {
-//      weather: "brokenclouds",
-//      image: daytime ? lightCloudDay : cloudyNight,
-//    },
-//    {
-//      weather: "showerrain",
-//      image: daytime ? rainDay : drizzleNight,
-//    },
-//    {
-//      weather: "drizzle",
-//      image: daytime ? rainDay.jpg : drizzleNight,
-//    },
-//    { weather: "rain", image: daytime ? rainDay : rainNight },
-//    {
-//      weather: "thunderstorm",
-//      image: daytime ? stormDay : stormNight,
-//    },
-//    { weather: "snow", image: daytime ? snowDay : snowNight },
-//    { weather: "mist", image: daytime ? mistDay : mistNight },
-//    { weather: "haze", image: daytime ? mistDay : mistNight },
-//    {
-//      weather: "loading",
-//      image: daytime ? "clear-day.jpg" : "clear-night.jpg",
-//    },
-//  ];
+

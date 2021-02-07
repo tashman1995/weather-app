@@ -16,6 +16,7 @@ function App() {
 
   const [query, setQuery] = useState("Cambridge");
   const [weather, setWeather] = useState({});
+  const [error, setError] = useState(false);
 
   // Search Weather Function
   const search = (evt) => {
@@ -24,7 +25,13 @@ function App() {
         fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
           .then((res) => res.json())
           .then((result) => {
-            updateResults(result);
+            console.log(result);
+            if (!result.message) {
+              setError(false);
+              updateResults(result);
+            } else {
+              setError(true);
+            }
           });
       }
     }
@@ -95,6 +102,7 @@ function App() {
         setQuery={setQuery}
         search={search}
         query={query}
+        error={error}
       />
     </div>
   );

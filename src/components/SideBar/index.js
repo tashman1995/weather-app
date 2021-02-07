@@ -6,7 +6,7 @@ import { FaTimes } from "react-icons/fa";
 import "./style.scss";
 import { IconContext } from "react-icons/lib";
 
-const SideBar = ({ weatherData, setQuery, search, query }) => {
+const SideBar = ({ weatherData, setQuery, search, query, error }) => {
   const sidebar = useRef();
   const [open, setOpen] = useState(false);
   const [weatherDetails, setWeatherDetails] = useState({
@@ -86,6 +86,7 @@ const SideBar = ({ weatherData, setQuery, search, query }) => {
             <input
               className="search__input"
               type="text"
+              id="search"
               value={query}
               placeholder="Cambridge, UK"
               onChange={(e) => setQuery(e.target.value)}
@@ -105,6 +106,7 @@ const SideBar = ({ weatherData, setQuery, search, query }) => {
               </IconContext.Provider>
             </div>
           </div>
+          {error && <label htmlFor="search" className="search__error">City not found</label>}
           <div className="weather-details">
             <h3 className="paragraph weather-details__heading">
               Weather Details
@@ -126,21 +128,6 @@ const SideBar = ({ weatherData, setQuery, search, query }) => {
               <div className="weather-details__detail--value">
                 {weatherDetails.wind}km/h
               </div>
-            </div>
-          </div>
-          <div className="weather-details">
-            <h3 className="paragraph weather-details__heading">Next Days</h3>
-            <div className="weather-details__detail">
-              <div className="weather-details__detail--title">Cloud</div>
-              <div className="weather-details__detail--value">86%</div>
-            </div>
-            <div className="weather-details__detail">
-              <div className="weather-details__detail--title">Humidity</div>
-              <div className="weather-details__detail--value">62%</div>
-            </div>
-            <div className="weather-details__detail">
-              <div className="weather-details__detail--title">Wind</div>
-              <div className="weather-details__detail--value">8km/h</div>
             </div>
           </div>
         </div>

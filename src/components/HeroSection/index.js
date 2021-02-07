@@ -11,7 +11,7 @@ const HeroSection = ({ weatherData, location }) => {
   const [sunPosition, setSunPosition] = useState([0, 0]);
   const [date, setDate] = useState(new Date());
   const [sunText, setSunText] = useState("Sunset in N/A hours");
-  const [daytime, setDaytime] = useState(false);
+  const [daytime, setDaytime] = useState("day");
 
   // Handling weather Data
   useEffect(() => {
@@ -51,17 +51,17 @@ const HeroSection = ({ weatherData, location }) => {
       // Daytime
       const diff = Math.round((sunset - time) / 60 / 60);
       setSunText(`Sunset is ${diff} hours away`);
-      setDaytime(true);
+      setDaytime("day");
     } else if (time > sunset) {
       // After Sunset
       const diff = Math.round((time - sunset) / 60 / 60);
       setSunText(`Sunset was ${diff} hours ago`);
-      setDaytime(false);
+      setDaytime("night");
     } else {
       // Before Sunrise
       const diff = Math.round((sunrise - time) / 60 / 60);
       setSunText(`Sunrise is ${diff} hours away`);
-      setDaytime(false);
+      setDaytime("night");
     }
   }, [sunPosition, date, timeZoneDiff]);
 

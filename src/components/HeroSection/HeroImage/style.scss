@@ -1,9 +1,18 @@
-.heroImage {
-  position: relative;
+.hero-image {
+  // position: relative;
   z-index: 1;
+  min-width: 100vw;
+  min-height: 100vh;
 }
 .image {
-  height: 100vh;
+// position: absolute;
+// top: 0;
+// left: 0;
   width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  will-change: opacity;
   object-fit: cover;
+  // z-index: 0;
 }

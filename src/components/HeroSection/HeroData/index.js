@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { WiCloudy } from "react-icons/wi";
 import moment from "moment";
 import "./style.scss";

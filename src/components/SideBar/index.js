@@ -14,7 +14,6 @@ const SideBar = ({ weatherData, setQuery, search, query }) => {
     humidity: 0,
     wind: 0,
   });
-  console.log(weatherData);
 
   // Set weather details
   useEffect(() => {
@@ -61,8 +60,6 @@ const SideBar = ({ weatherData, setQuery, search, query }) => {
       </div>
       <section
         className={`side-bar ${!open && "side-bar--closed"}`}
-        disabled={!open && true}
-        tabIndex={!open ? -1 : ""}
         ref={sidebar}>
         <div
           className={`side-bar__content ${
@@ -75,6 +72,8 @@ const SideBar = ({ weatherData, setQuery, search, query }) => {
             }`}>
             <IconContext.Provider value={{ color: "white", size: "2.5rem" }}>
               <button
+                disabled={!open && true}
+                tabIndex={!open ? -1 : ""}
                 className="toggle-btn"
                 onClick={() => {
                   setOpen(false);
@@ -91,10 +90,16 @@ const SideBar = ({ weatherData, setQuery, search, query }) => {
               placeholder="Cambridge, UK"
               onChange={(e) => setQuery(e.target.value)}
               onKeyPress={search}
+              disabled={!open && true}
+              tabIndex={!open ? -1 : ""}
             />
             <div className="search__icon-container">
               <IconContext.Provider value={{ color: "black", size: "3rem" }}>
-                <button className="search__btn" onClick={() => {}}>
+                <button
+                  disabled={!open && true}
+                  tabIndex={!open ? -1 : ""}
+                  className="search__btn"
+                  onClick={search}>
                   <BiSearch />
                 </button>
               </IconContext.Provider>

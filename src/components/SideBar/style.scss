@@ -1,0 +1,130 @@
+@import "../../style/abstracts/variables";
+@import "../../style/abstracts/mixins";
+
+$padding: 5rem;
+.side-bar {
+  position: absolute;
+  font-size: 2rem;
+  top: 0;
+  right: 0;
+  background-color: rgba($color: $color-black, $alpha: 0.3);
+  height: 100vh;
+  backdrop-filter: blur(10px);
+  width: 45rem;
+  z-index: 3;
+
+  color: $color-white;
+  transition: transform 0.3s ease-in;
+
+  &--closed {
+    transform: translate(83%, 0);
+  }
+
+  &__content {
+    opacity: 1;
+    transition: all 0.3s ease-in;
+    width: 45rem;
+    padding: $padding;
+    &--closed {
+      opacity: 0 !important;
+    }
+  }
+}
+
+.search {
+  @include center;
+  padding-bottom: $padding;
+  border-bottom: 1px solid rgba($color-white, 0.8);
+  &__input {
+    width: 100%;
+    font-size: 2rem;
+    color: $color-white;
+    padding: 1.2rem 0;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid rgba($color-white, 0.8);
+    transition: all 0.2s ease-out;
+
+    &:focus,
+    &:hover {
+      outline: none;
+      border: none;
+      border-bottom: 1px solid rgba($color-white, 1);
+    }
+
+    &::placeholder {
+      color: rgba($color-white, 0.5);
+    }
+  }
+
+  &__btn {
+    width: $padding;
+    @include center;
+    padding: 1rem 1.2rem;
+    background-color: rgba($color-primary, 0.8);
+    &:focus,
+    &:hover {
+      background-color: rgba($color-primary, 1);
+    }
+  }
+
+  &__icon-container {
+    margin-left: 1.2rem;
+    @include center;
+  }
+}
+
+.weather-details {
+  margin: $padding 0;
+  border-bottom: 1px solid rgba($color-white, 1);
+  &__heading {
+    margin-bottom: $padding;
+  }
+
+  &__detail {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: $padding * 0.5;
+
+    &:last-child {
+      margin-bottom: $padding;
+    }
+
+    &--title {
+      color: rgba($color-white, 0.8);
+    }
+  }
+}
+
+.toggle-btn {
+  margin: 1.2rem;
+  opacity: 0.8;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease-out;
+  opacity: 1;
+
+  &__container {
+    z-index: 4;
+    position: absolute;
+    top: 0;
+    right: 0;
+    &--close {
+      z-index: 5;
+    }
+  }
+
+  &:hover,
+  &:focus {
+    opacity: 1;
+    transform: translateY(-0.5px);
+  }
+}
+
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+  z-index: 0;
+
+  transition: all 0.2s ease-out;
+}

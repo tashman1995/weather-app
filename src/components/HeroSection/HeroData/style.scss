@@ -1,0 +1,56 @@
+@import "../../../style/abstracts/variables";
+@import "../../../style/abstracts/mixins";
+.hero-data {
+  width: min-content;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: $color-white;
+  padding: 12rem 14rem;
+  
+  z-index: 2;
+
+  &__upper {
+
+  }
+
+  &__lower {
+      display: flex;
+      align-items: flex-end;
+  }
+
+  &__location {
+    margin-left: 1.8rem;
+  }
+
+  &__temp {
+    display: flex;
+  }
+
+  &__date {
+    margin-top: 0.8rem;
+  }
+}
+
+.weather {
+  margin-left: 1.8rem;
+
+  @include center;
+  flex-direction: column;
+
+  &__text {
+    margin-top: -2.4rem;
+  }
+}
+
+.celcius {
+  width: 4rem;
+  height: 4em;
+  border: solid 1.2rem $color-white;
+  border-radius: 400rem;
+  margin-top: 2rem;
+}

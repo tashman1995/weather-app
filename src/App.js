@@ -26,20 +26,90 @@ function App() {
   const [query, setQuery] = useState("Cambridge");
   const [weather, setWeather] = useState({});
 
-// Search Weather Function
-   const search = (evt) => {
-     if (evt) {
-       if (evt.key === "Enter") {
-         fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
-           .then((res) => res.json())
-           .then((result) => {
-             setWeather(result);
-             setQuery("");
-             console.log(result);
-           });
-       }
-     } 
-   };
+  // Search Weather Function
+  const search = (evt) => {
+    if (evt) {
+      if (evt.key === "Enter") {
+        fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
+          .then((res) => res.json())
+          .then((result) => {
+            const { main, weather } = result;
+            setTemp({
+              min: Math.round(main.temp),
+              max: Math.round(main.temp_max),
+              average: Math.round(main.temp_min),
+            });
+            setWeatherType(weather[0].main);
+            console.log(result);
+            setWeather(result);
+            setLocation(result.name);
+            setQuery("");
+          });
+      }
+    }
+  };
+  // Initial Fetch
+  useEffect(() => {
+    const getCurrentPosition = (options = {}) => {
+      return new Promise((accept, reject) => {
+        window.navigator.geolocation.getCurrentPosition(
+          accept,
+          reject,
+          options
+        );
+      });
+    };
+
+    const loadPosition = async () => {
+      try {
+        const options = {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0,
+        };
+        const position = await getCurrentPosition(options);
+        const { longitude, latitude } = position.coords;
+        setLongLat([longitude, latitude])
+
+        const positionDetails = await axios.get(
+          "http://www.mapquestapi.com/geocoding/v1/reverse",
+          {
+            params: {
+              location: `${latitude}, ${longitude}`,
+              key: "AmAsAiGQhuAM4MBV3mTj4HMYEWRXKym5",
+            },
+          }
+        );
+        const location =
+          positionDetails.data.results[0].locations[0].adminArea5;
+        setLocation(location);
+        search()
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+
+    loadPosition();
+    // fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
+    fetch(
+      `${api.base}weather?lat=${longLat[1]}&lon=${longLat[0]}&units=metric&appid=${api.key}`
+    )
+      .then((res) => res.json())
+      .then((result) => {
+        const { main, weather } = result;
+        setTemp({
+          min: Math.round(main.temp),
+          max: Math.round(main.temp_max),
+          average: Math.round(main.temp_min),
+        });
+        setWeatherType(weather[0].main);
+        console.log(result);
+        setWeather(result);
+        setLocation(result.name);
+        setQuery("");
+        // console.log(result);
+      });
+  }, []);
 
   // Calculate Users Current Position
   // useEffect(() => {
@@ -85,8 +155,6 @@ function App() {
   //   search(null);
   // }, []);
 
- 
-
   // // GET weather from geolocation
   // useEffect(() => {
   //   console.log('get weather')
@@ -126,6 +194,7 @@ function App() {
   return (
     <div className="App">
       <HeroSection
+        weather={weather}
         location={location}
         temp={temp}
         weatherType={weatherType}

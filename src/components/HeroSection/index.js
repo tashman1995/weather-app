@@ -4,10 +4,11 @@ import HeroImage from "./HeroImage";
 
 import "./style.scss";
 
-const HeroSection = ({ location, temp, weatherType, time }) => {
+const HeroSection = ({ weather, location, temp, weatherType, time }) => {
   return (
     <section className="hero">
       <HeroData
+      weather={weather}
         location={location}
         temp={temp}
         weatherType={weatherType}

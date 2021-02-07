@@ -3,7 +3,7 @@ import { WiCloudy } from "react-icons/wi";
 import moment from "moment";
 import "./style.scss";
 
-const HeroData = ({ location, temp, weatherType, time }) => {
+const HeroData = ({ weather, location, temp, weatherType, time }) => {
   
   return (
     <div className="hero-data">

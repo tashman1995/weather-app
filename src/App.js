@@ -70,7 +70,17 @@ function App() {
     }
   }, [locationDetails, useGeoData]);
 
-  
+  // Initial Load
+  useEffect(() => {
+    axios
+      .get(`${api.base}weather?q=london&units=metric&APPID=${api.key}`)
+      .then((res) => {
+        setError(false);
+        updateResults(res);
+        isMobile && setOpen(false);
+      })
+      .catch(() => setError(true));
+  }, [isMobile]);
 
   return (
     <div className="App">

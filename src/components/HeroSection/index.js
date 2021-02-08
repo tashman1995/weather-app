@@ -30,8 +30,8 @@ const HeroSection = ({ weatherData, location }) => {
     sys && setSunPosition([sys.sunrise, sys.sunset]);
 
     // Calculate time to sunrise or sunset
-
-    const time = date.getTime() / 1000;
+    const targetTime = new Date();
+    const time = (targetTime.getTime() + timeZoneDiff * 1000) / 1000;
     const sunrise = sunPosition[0] + timeZoneDiff;
     const sunset = sunPosition[1] + timeZoneDiff;
 
@@ -54,7 +54,6 @@ const HeroSection = ({ weatherData, location }) => {
   }, [weatherData, timeZoneDiff]);
 
   // Calculate time zone difference
-
   useEffect(() => {
     const targetTime = new Date();
     const shiftedDate = new Date(targetTime.getTime() + timeZoneDiff * 1000);

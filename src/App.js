@@ -20,12 +20,12 @@ function App() {
 
   // Search Weather Function
   const search = (evt) => {
+
     if (evt) {
       if (evt.key === "Enter") {
         fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
           .then((res) => res.json())
           .then((result) => {
-            console.log(result);
             if (!result.message) {
               setError(false);
               updateResults(result);

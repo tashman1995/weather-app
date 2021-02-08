@@ -111,9 +111,7 @@ const HeroImage = ({ weatherType, daytime }) => {
           weatherImagesArray
         )
       );
-   
-  }, [weatherType]);
-
+  }, [weatherType, daytime]);
 
   const [index, set] = useState(0);
 
@@ -143,9 +141,6 @@ const HeroImage = ({ weatherType, daytime }) => {
       ))}
     </div>
   );
-
 };
 
 export default HeroImage;
-
-

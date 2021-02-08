@@ -4,6 +4,7 @@
   width: min-content;
   max-width: 70vw;
   height: 100vh;
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -15,40 +16,64 @@
 
   z-index: 2;
 
-  &__upper {
+  @include respond(small) {
+    max-width: 90vw;
+    padding: 8rem 10rem;
+  }
+  @include respond(smaller) {
+    max-width: 90vw;
+    padding: 4.8rem;
   }
 
   &__lower {
     display: flex;
     align-items: flex-end;
+
+    @include respond(smaller) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 
   &__location {
-      min-width: min-content;
-      width: fit-content;
-      max-width: 50vw;
+    min-width: min-content;
+    width: fit-content;
+    max-width: 50vw;
     margin-left: 1.8rem;
-   
+
+    @include respond(smaller) {
+      margin-left: 0;
+      margin-top: 1.2rem;
+    }
   }
 
   &__temp {
     display: flex;
+    @include respond(smaller) {
+      order: 2;
+    }
   }
 
   &__date {
     margin-top: 0.8rem;
   }
+
+  &__detail {
+    @include respond(smaller) {
+      order: 3;
+    }
+  }
 }
 
 .weather {
   margin-left: 1.8rem;
+  @include respond(smaller) {
+    order: 1;
+    margin-left: 0;
+  }
 
   @include center;
   flex-direction: column;
-
-  &__text {
-    margin-top: -2.4rem;
-  }
 }
 
 .celcius {

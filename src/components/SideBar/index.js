@@ -100,7 +100,7 @@ const SideBar = ({ weatherData, setQuery, search, query, error }) => {
                   disabled={!open && true}
                   tabIndex={!open ? -1 : ""}
                   className="search__btn"
-                  onClick={search}>
+                  onClick={() => search({key: "Enter"})}>
                   <BiSearch />
                 </button>
               </IconContext.Provider>

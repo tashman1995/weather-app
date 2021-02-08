@@ -28,7 +28,30 @@ const HeroSection = ({ weatherData, location }) => {
     weather && setWeatherType(weather[0].main);
 
     sys && setSunPosition([sys.sunrise, sys.sunset]);
-  }, [weatherData]);
+
+    // Calculate time to sunrise or sunset
+
+    const time = date.getTime() / 1000;
+    const sunrise = sunPosition[0] + timeZoneDiff;
+    const sunset = sunPosition[1] + timeZoneDiff;
+
+    if (time > sunrise && time < sunset) {
+      // Daytime
+      const diff = Math.round((sunset - time) / 60 / 60);
+      setSunText(`Sunset is ${diff} hours away`);
+      setDaytime("day");
+    } else if (time > sunset) {
+      // After Sunset
+      const diff = Math.round((time - sunset) / 60 / 60);
+      setSunText(`Sunset was ${diff} hours ago`);
+      setDaytime("night");
+    } else {
+      // Before Sunrise
+      const diff = Math.round((sunrise - time) / 60 / 60);
+      setSunText(`Sunrise is ${diff} hours away`);
+      setDaytime("night");
+    }
+  }, [weatherData, timeZoneDiff]);
 
   // Calculate time zone difference
 
@@ -42,31 +65,7 @@ const HeroSection = ({ weatherData, location }) => {
   });
 
   // Calculate time to sunrise or sunset
-  useEffect(() => {
-    const time = date.getTime() / 1000;
-    const sunrise = sunPosition[0] + timeZoneDiff;
-    const sunset = sunPosition[1] + timeZoneDiff;
-
-    if (time > sunrise && time < sunset) {
-      // Daytime
-      const diff = Math.round((sunset - time) / 60 / 60);
-      setSunText(`Sunset is ${diff} hours away`);
-      setDaytime("day");
-     
-    } else if (time > sunset) {
-      // After Sunset
-      const diff = Math.round((time - sunset) / 60 / 60);
-      setSunText(`Sunset was ${diff} hours ago`);
-      setDaytime("night");
-     
-    } else {
-      // Before Sunrise
-      const diff = Math.round((sunrise - time) / 60 / 60);
-      setSunText(`Sunrise is ${diff} hours away`);
-      setDaytime("night");
-     
-    }
-  }, [weatherData, sunPosition, date, timeZoneDiff]);
+  useEffect(() => {}, [weatherData, sunPosition, date, timeZoneDiff]);
 
   return (
     <section className="hero">
@@ -77,6 +76,7 @@ const HeroSection = ({ weatherData, location }) => {
         timeZoneDiff={timeZoneDiff}
         sunText={sunText}
         date={date}
+        daytime={daytime}
       />
       <HeroImage weatherType={weatherType} daytime={daytime} />
     </section>

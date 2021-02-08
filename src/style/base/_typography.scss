@@ -33,6 +33,10 @@ $font-size-smaller: 1.3rem;
   &--black {
     color: $color-black;
   }
+
+  @include respond(smaller) {
+    font-size: 12rem;
+  }
 }
 
 .heading-tertiary {
@@ -43,12 +47,24 @@ $font-size-smaller: 1.3rem;
   &--small {
     font-size: 6rem;
   }
+
+  @include respond(smaller) {
+    font-size: 4rem;
+  }
 }
 
 .paragraph {
   font-size: 2rem;
   line-height: 1.6;
   font-weight: 400;
+
+  @include respond(small) {
+    font-size: 2.2rem;
+  }
+
+  @include respond(smaller) {
+    font-size: 2.4rem;
+  }
 
   &--no-line-height {
     line-height: 1.2;

@@ -16,8 +16,16 @@ $padding: 5rem;
   color: $color-white;
   transition: transform 0.3s ease-in;
 
+  @include respond(smaller) {
+    width: 100%;
+    font-size: 2.4rem;
+  }
+
   &--closed {
     transform: translate(83%, 0);
+    @include respond(smaller) {
+      transform: translate(100%, 0);
+    }
   }
 
   &__content {
@@ -27,6 +35,11 @@ $padding: 5rem;
     padding: $padding;
     &--closed {
       opacity: 0 !important;
+    }
+
+    @include respond(smaller) {
+      width: 100%;
+      padding: 10rem 6rem;
     }
   }
 }
@@ -46,6 +59,10 @@ $padding: 5rem;
     border: none;
     border-bottom: 1px solid rgba($color-white, 0.5);
     transition: all 0.2s ease-out;
+
+    @include respond(smaller) {
+      font-size: 2.4rem;
+    }
 
     &:focus,
     &:hover {
@@ -84,7 +101,7 @@ $padding: 5rem;
 }
 
 .weather-details {
-  margin: $padding 0;
+  margin: 0 0 $padding 0;
   border-bottom: 1px solid rgba($color-white, 1);
   &__heading {
     margin-bottom: $padding;
@@ -111,6 +128,11 @@ $padding: 5rem;
   border-bottom: 2px solid transparent;
   transition: all 0.2s ease-out;
   opacity: 1;
+
+  @include respond(smaller) {
+    margin: 3.6rem;
+    transform: scale(1.5);
+  }
 
   &__container {
     z-index: 4;

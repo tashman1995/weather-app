@@ -7,7 +7,7 @@ import axios from "axios";
 import "./style/main.scss";
 
 const api = {
-  key: "cd0eab9c6099bca2b4ec4c682921bd2c",
+  key: "ae679129939d38219cf4d55a044415ba",
   base: "https://api.openweathermap.org/data/2.5/",
 };
 
@@ -15,7 +15,7 @@ function App() {
   const [location, setLocation] = useState("Loading...");
   const [longLat, setLongLat] = useState([0.121817, 52.205338]);
 
-  const [query, setQuery] = useState("Cambridge");
+  const [query, setQuery] = useState("New York");
   const [weather, setWeather] = useState({});
   const [error, setError] = useState(false);
 
@@ -29,6 +29,18 @@ function App() {
   const search = (evt) => {
     if (evt) {
       if (evt.key === "Enter") {
+        // axios
+        //   .get(api.base, {
+        //     params: {
+        //       q: query,
+        //       units: "metric",
+        //       APPID: api.key,
+        //     },
+        //   })
+        //   .then((res) => {
+        //     console.log(res);
+        //   })
+        //   .catch((error) => console.log(`Error: ${error}`));
         fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
           .then((res) => res.json())
           .then((result) => {

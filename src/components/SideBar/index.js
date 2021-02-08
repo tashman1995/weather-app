@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, Fragment } from "react";
+import { useMediaQuery } from "react-responsive";
 import { IoIosMenu } from "react-icons/io";
 import { BiSearch } from "react-icons/bi";
 import { FaTimes } from "react-icons/fa";
@@ -15,6 +16,9 @@ const SideBar = ({
   setOpen,
   open,
 }) => {
+  // Media query
+  const isMobile = useMediaQuery({ query: `(max-width: 600px)` });
+
   const sidebar = useRef();
   const [weatherDetails, setWeatherDetails] = useState({
     cloud: 0,
@@ -102,15 +106,13 @@ const SideBar = ({
               tabIndex={!open ? -1 : ""}
             />
             <div className="search__icon-container">
-              <IconContext.Provider value={{ color: "black", size: "3rem" }}>
-                <button
-                  disabled={!open && true}
-                  tabIndex={!open ? -1 : ""}
-                  className="search__btn"
-                  onClick={() => search({ key: "Enter" })}>
-                  <BiSearch />
-                </button>
-              </IconContext.Provider>
+              <button
+                disabled={!open && true}
+                tabIndex={!open ? -1 : ""}
+                className="search__btn"
+                onClick={() => search({ key: "Enter" })}>
+                <BiSearch size={30} />
+              </button>
             </div>
           </div>
           {/* Error message if incorrect input */}

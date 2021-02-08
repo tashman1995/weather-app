@@ -35,6 +35,7 @@ function App() {
           setUseGeoData(false);
           setError(false);
           updateResults(res);
+          setQuery("");
           isMobile && setOpen(false);
         })
         .catch(() => setError(true));
@@ -45,7 +46,6 @@ function App() {
   const updateResults = (result) => {
     setWeather(result.data);
     setLocation(result.data.name);
-    setQuery("");
   };
 
   // Handle geolocation on intial load

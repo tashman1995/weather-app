@@ -64,7 +64,6 @@ function App() {
         .then((res) => {
           setError(false);
           updateResults(res);
-          isMobile && setOpen(false);
         })
         .catch(() => setError(true));
     }
@@ -77,7 +76,6 @@ function App() {
       .then((res) => {
         setError(false);
         updateResults(res);
-        isMobile && setOpen(false);
       })
       .catch(() => setError(true));
   }, [isMobile]);

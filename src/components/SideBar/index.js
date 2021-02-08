@@ -48,7 +48,7 @@ const SideBar = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOff);
     };
-  }, []);
+  }, [setOpen]);
 
   return (
     <Fragment>
@@ -88,6 +88,7 @@ const SideBar = ({
               </button>
             </IconContext.Provider>
           </div>{" "}
+          {/* Search Input and button */}
           <div className="search">
             <input
               className="search__input"
@@ -112,11 +113,13 @@ const SideBar = ({
               </IconContext.Provider>
             </div>
           </div>
+          {/* Error message if incorrect input */}
           {error && (
             <label htmlFor="search" className="search__error">
               City not found
             </label>
           )}
+          {/* Minor weather details */}
           <div className="weather-details">
             <h3 className="paragraph weather-details__heading">
               Weather Details

@@ -20,6 +20,8 @@ import stormDay from "./img/storm-day.jpg";
 import stormNight from "./img/storm-night.jpg";
 
 const HeroImage = ({ weatherType, daytime }) => {
+  const [index, set] = useState(0);
+  // Weather Images for day and night
   const weatherImagesArray = [
     { weather: "clearday", image: clearDay },
     { weather: "clearnight", image: clearNight },
@@ -92,9 +94,8 @@ const HeroImage = ({ weatherType, daytime }) => {
       image: daytime ? "clear-day.jpg" : "clear-night.jpg",
     },
   ];
-  // const [index, setIndex] = useState(0);
 
-  // Find Index of current weather
+  // Find Index of current weather in weather image array
   useEffect(() => {
     const search = (nameKey, myArray) => {
       for (var i = 0; i < myArray.length; i++) {
@@ -103,7 +104,7 @@ const HeroImage = ({ weatherType, daytime }) => {
         }
       }
     };
-    console.log(weatherType.replace(/\s+/g, "").toLowerCase() + daytime);
+
     weatherType &&
       set(
         search(
@@ -113,8 +114,7 @@ const HeroImage = ({ weatherType, daytime }) => {
       );
   }, [weatherType, daytime]);
 
-  const [index, set] = useState(0);
-
+  // Image transition setup
   const transitions = useTransition(
     weatherImagesArray[index],
     (item) => item.weather,

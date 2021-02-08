@@ -20,36 +20,41 @@ import moment from "moment";
 import "./style.scss";
 
 const HeroData = ({ location, temp, weatherType, sunText, date, daytime }) => {
-const isMobile = useMediaQuery({ query: `(max-width: 600px)` });
+  // Media query
+  const isMobile = useMediaQuery({ query: `(max-width: 600px)` });
 
-  const iconsDay = {
-    clear: <WiDaySunny size={isMobile ? 80 : 120} />,
-    fewclouds: <WiDayCloudy size={isMobile ? 80 : 120} />,
-    clouds: <WiCloudy size={isMobile ? 80 : 120} />,
-    scatteredclouds: <WiDayCloudy size={isMobile ? 80 : 120} />,
-    brokenclouds: <WiDayCloudy size={isMobile ? 80 : 120} />,
-    showerrain: <WiShowers size={isMobile ? 80 : 120} />,
-    rain: <WiRain size={isMobile ? 80 : 120} />,
-    thunderstorm: <WiStormShowers size={isMobile ? 80 : 120} />,
-    snow: <WiSnow size={isMobile ? 80 : 120} />,
-    mist: <WiFog size={isMobile ? 80 : 120} />,
-    haze: <WiDayHaze size={isMobile ? 80 : 120} />,
-    loading: <WiDaySunny size={isMobile ? 80 : 120} />,
+  // Iconst and related weather with media query, one for day and night
+  const icons = {
+    day: {
+      clear: <WiDaySunny size={isMobile ? 80 : 120} />,
+      fewclouds: <WiDayCloudy size={isMobile ? 80 : 120} />,
+      clouds: <WiCloudy size={isMobile ? 80 : 120} />,
+      scatteredclouds: <WiDayCloudy size={isMobile ? 80 : 120} />,
+      brokenclouds: <WiDayCloudy size={isMobile ? 80 : 120} />,
+      showerrain: <WiShowers size={isMobile ? 80 : 120} />,
+      rain: <WiRain size={isMobile ? 80 : 120} />,
+      thunderstorm: <WiStormShowers size={isMobile ? 80 : 120} />,
+      snow: <WiSnow size={isMobile ? 80 : 120} />,
+      mist: <WiFog size={isMobile ? 80 : 120} />,
+      haze: <WiDayHaze size={isMobile ? 80 : 120} />,
+      loading: <WiDaySunny size={isMobile ? 80 : 120} />,
+    },
+    night: {
+      clear: <WiNightClear size={isMobile ? 80 : 120} />,
+      fewclouds: <WiNightAltCloudy size={isMobile ? 80 : 120} />,
+      clouds: <WiNightAltCloudy size={isMobile ? 80 : 120} />,
+      scatteredclouds: <WiNightAltCloudy size={isMobile ? 80 : 120} />,
+      brokenclouds: <WiNightAltCloudy size={isMobile ? 80 : 120} />,
+      showerrain: <WiNightAltShowers size={isMobile ? 80 : 120} />,
+      rain: <WiNightAltShowers size={isMobile ? 80 : 120} />,
+      thunderstorm: <WiStormShowers size={isMobile ? 80 : 120} />,
+      snow: <WiNightAltSnow size={isMobile ? 80 : 120} />,
+      mist: <WiFog size={isMobile ? 80 : 120} />,
+      haze: <WiFog size={isMobile ? 80 : 120} />,
+      loading: <WiNightClear size={isMobile ? 80 : 120} />,
+    },
   };
-  const iconsNight = {
-    clear: <WiNightClear size={isMobile ? 80 : 120} />,
-    fewclouds: <WiNightAltCloudy size={isMobile ? 80 : 120} />,
-    clouds: <WiNightAltCloudy size={isMobile ? 80 : 120} />,
-    scatteredclouds: <WiNightAltCloudy size={isMobile ? 80 : 120} />,
-    brokenclouds: <WiNightAltCloudy size={isMobile ? 80 : 120} />,
-    showerrain: <WiNightAltShowers size={isMobile ? 80 : 120} />,
-    rain: <WiNightAltShowers size={isMobile ? 80 : 120} />,
-    thunderstorm: <WiStormShowers size={isMobile ? 80 : 120} />,
-    snow: <WiNightAltSnow size={isMobile ? 80 : 120} />,
-    mist: <WiFog size={isMobile ? 80 : 120} />,
-    haze: <WiFog size={isMobile ? 80 : 120} />,
-    loading: <WiNightClear size={isMobile ? 80 : 120} />,
-  };
+
   return (
     <div className="hero-data">
       <div className="hero-data__upper">
@@ -76,8 +81,8 @@ const isMobile = useMediaQuery({ query: `(max-width: 600px)` });
           <div className="weather weather--mobile">
             <div className="weather__icon">
               {weatherType && daytime === "day"
-                ? iconsDay[weatherType.replace(/\s+/g, "").toLowerCase()]
-                : iconsNight[weatherType.replace(/\s+/g, "").toLowerCase()]}
+                ? icons.day[weatherType.replace(/\s+/g, "").toLowerCase()]
+                : icons.night[weatherType.replace(/\s+/g, "").toLowerCase()]}
             </div>
             <div className="paragraph weather__text">{weatherType}</div>
           </div>
@@ -86,8 +91,8 @@ const isMobile = useMediaQuery({ query: `(max-width: 600px)` });
         <div className="weather ">
           <div className="weather__icon">
             {weatherType && daytime === "day"
-              ? iconsDay[weatherType.replace(/\s+/g, "").toLowerCase()]
-              : iconsNight[weatherType.replace(/\s+/g, "").toLowerCase()]}
+              ? icons.day[weatherType.replace(/\s+/g, "").toLowerCase()]
+              : icons.night[weatherType.replace(/\s+/g, "").toLowerCase()]}
           </div>
           <div className="paragraph weather__text">{weatherType}</div>
         </div>

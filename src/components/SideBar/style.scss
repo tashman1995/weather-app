@@ -3,6 +3,7 @@
 
 $padding: 5rem;
 .side-bar {
+  color: $color-white;
   position: absolute;
   font-size: 2rem;
   top: 0;
@@ -13,7 +14,6 @@ $padding: 5rem;
   width: 45rem;
   z-index: 3;
 
-  color: $color-white;
   transition: transform 0.3s ease-in;
 
   @include respond(smaller) {

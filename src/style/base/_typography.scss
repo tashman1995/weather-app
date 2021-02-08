@@ -34,11 +34,9 @@ $font-size-smaller: 1.3rem;
     color: $color-black;
   }
 
+ 
   @include respond(smaller) {
-    font-size: 12rem;
-  }
-  @include respond(smaller) {
-    font-size: 12rem;
+    font-size: 14rem;
   }
 }
 

@@ -127,7 +127,7 @@ $padding: 5rem;
   opacity: 0.8;
   border-bottom: 2px solid transparent;
   transition: all 0.2s ease-out;
-  opacity: 1;
+
 
   @include respond(smaller) {
     margin: 3.6rem;
@@ -147,6 +147,10 @@ $padding: 5rem;
   &:hover {
     opacity: 1;
     transform: translateY(-0.5px);
+
+    @include respond(smaller) {
+      transform: scale(1.5) translateY(-0.5px);
+    }
   }
 
   &:focus {

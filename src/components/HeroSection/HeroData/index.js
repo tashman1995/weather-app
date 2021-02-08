@@ -63,6 +63,7 @@ const HeroData = ({ location, temp, weatherType, sunText, date, daytime }) => {
         </p>
       </div>
       <div className="hero-data__lower">
+        {/* Average Temperature */}
         <div className="hero-data__temp">
           <h2 className="heading-secondary">{temp.average}</h2>
           <div className="celcius"></div>
@@ -72,7 +73,7 @@ const HeroData = ({ location, temp, weatherType, sunText, date, daytime }) => {
           <div className="hero-data__location">
             <h1
               className={` heading-primary ${
-                location && location.length > 9 && "heading-primary--small"
+                location && location.length > 10 && "heading-primary--small"
               }`}>
               {location}
             </h1>

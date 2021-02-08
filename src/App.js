@@ -15,7 +15,7 @@ function App() {
   const [location, setLocation] = useState("Loading...");
   const [longLat, setLongLat] = useState([0.121817, 52.205338]);
 
-  const [query, setQuery] = useState("New York");
+  const [query, setQuery] = useState("");
   const [weather, setWeather] = useState({});
   const [error, setError] = useState(false);
 
@@ -48,58 +48,19 @@ function App() {
     setQuery("");
   };
 
-  // Initial Fetch using geolocation
+  // Initial Fetch
   useEffect(() => {
-    const getCurrentPosition = (options = {}) => {
-      return new Promise((accept, reject) => {
-        window.navigator.geolocation.getCurrentPosition(
-          accept,
-          reject,
-          options
-        );
-      });
-    };
-
-    const loadPosition = async () => {
-      try {
-        const options = {
-          enableHighAccuracy: true,
-          timeout: 5000,
-          maximumAge: 0,
-        };
-        const position = await getCurrentPosition(options);
-        const { longitude, latitude } = position.coords;
-        setLongLat([longitude, latitude]);
-
-        const positionDetails = await axios.get(
-          "https://www.mapquestapi.com/geocoding/v1/reverse",
-          {
-            params: {
-              location: `${latitude}, ${longitude}`,
-              key: "AmAsAiGQhuAM4MBV3mTj4HMYEWRXKym5",
-            },
-          }
-        );
-
-        setLocation(positionDetails.data.results[0].locations[0].adminArea5);
-      } catch (err) {
-        console.error(err.message);
-      }
-    };
-
-    loadPosition();
-
     axios
-      .get(
-        `${api.base}weather?lat=${longLat[1]}&lon=${longLat[0]}&units=metric&APPID=${api.key}`
-      )
+      .get(`${api.base}weather?q=london&units=metric&APPID=${api.key}`)
       .then((res) => {
         setError(false);
         updateResults(res);
         isMobile && setOpen(false);
       })
       .catch(() => setError(true));
-  }, []);
+  }, [isMobile]);
+
+ 
 
   return (
     <div className="App">

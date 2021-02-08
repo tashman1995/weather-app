@@ -75,7 +75,7 @@ function App() {
         setLongLat([longitude, latitude]);
 
         const positionDetails = await axios.get(
-          "http://www.mapquestapi.com/geocoding/v1/reverse",
+          "https://www.mapquestapi.com/geocoding/v1/reverse",
           {
             params: {
               location: `${latitude}, ${longitude}`,

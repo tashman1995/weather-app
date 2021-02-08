@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import HeroSection from "./components/HeroSection";
 import SideBar from "./components/SideBar";
+import useCurrentLocation from "./components/useCurrentLocation";
 import axios from "axios";
 
 import "./style/main.scss";
@@ -13,11 +14,11 @@ const api = {
 
 function App() {
   const [location, setLocation] = useState("Loading...");
-  const [longLat, setLongLat] = useState([0.121817, 52.205338]);
-
   const [query, setQuery] = useState("");
   const [weather, setWeather] = useState({});
   const [error, setError] = useState(false);
+  // For using geodata initially
+  const [useGeoData, setUseGeoData] = useState(true);
 
   // Opening and closing Sidebar
   const [open, setOpen] = useState(false);
@@ -27,17 +28,16 @@ function App() {
 
   // Search Weather Function
   const search = (evt) => {
-    if (evt) {
-      if (evt.key === "Enter") {
-        axios
-          .get(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
-          .then((res) => {
-            setError(false);
-            updateResults(res);
-            isMobile && setOpen(false);
-          })
-          .catch(() => setError(true));
-      }
+    if (evt.key === "Enter") {
+      axios
+        .get(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
+        .then((res) => {
+          setUseGeoData(false);
+          setError(false);
+          updateResults(res);
+          isMobile && setOpen(false);
+        })
+        .catch(() => setError(true));
     }
   };
 
@@ -48,19 +48,29 @@ function App() {
     setQuery("");
   };
 
-  // Initial Fetch
-  useEffect(() => {
-    axios
-      .get(`${api.base}weather?q=london&units=metric&APPID=${api.key}`)
-      .then((res) => {
-        setError(false);
-        updateResults(res);
-        isMobile && setOpen(false);
-      })
-      .catch(() => setError(true));
-  }, [isMobile]);
+  // Handle geolocation on intial load
+  const geolocationOptions = {
+    timeout: 1000 * 60 * 1, // 1 min (1000 ms * 60 sec * 1 minute = 60 000ms)
+  };
 
- 
+  const { locationDetails } = useCurrentLocation(geolocationOptions);
+
+  useEffect(() => {
+    if (useGeoData && locationDetails) {
+      axios
+        .get(
+          `${api.base}weather?lat=${locationDetails.latitude}&lon=${locationDetails.longitude}&units=metric&APPID=${api.key}`
+        )
+        .then((res) => {
+          setError(false);
+          updateResults(res);
+          isMobile && setOpen(false);
+        })
+        .catch(() => setError(true));
+    }
+  }, [locationDetails, useGeoData]);
+
+  
 
   return (
     <div className="App">

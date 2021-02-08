@@ -80,7 +80,7 @@
 
   &--mobile {
     display: none;
-    margin-left: 0;
+    margin-left: 1.2rem;
     @include respond(smallest) {
       display: flex;
     }

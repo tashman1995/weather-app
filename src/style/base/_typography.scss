@@ -24,6 +24,7 @@ $font-size-smaller: 1.3rem;
 }
 
 .heading-secondary {
+  
   font-size: 17rem;
   font-weight: 500;
   line-height: 1;
@@ -34,13 +35,13 @@ $font-size-smaller: 1.3rem;
     color: $color-black;
   }
 
- 
   @include respond(smaller) {
     font-size: 14rem;
   }
 }
 
 .heading-primary {
+  font-family: $font-family-heading;
   font-size: 8rem;
   line-height: 1;
   font-weight: 500;
@@ -55,6 +56,7 @@ $font-size-smaller: 1.3rem;
 }
 
 .paragraph {
+  
   font-size: 2rem;
   line-height: 1.6;
   font-weight: 400;

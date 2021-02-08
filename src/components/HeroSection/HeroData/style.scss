@@ -29,7 +29,7 @@
     display: flex;
     align-items: flex-end;
 
-    @include respond(smaller) {
+    @include respond(smallest) {
       flex-direction: column;
       align-items: flex-start;
     }
@@ -41,7 +41,7 @@
     max-width: 50vw;
     margin-left: 1.8rem;
 
-    @include respond(smaller) {
+    @include respond(smallest) {
       margin-left: 0;
       margin-top: 1.2rem;
     }
@@ -49,7 +49,7 @@
 
   &__temp {
     display: flex;
-    @include respond(smaller) {
+    @include respond(smallest) {
       order: 2;
     }
   }
@@ -59,21 +59,35 @@
   }
 
   &__detail {
-    @include respond(smaller) {
+    @include respond(smallest) {
       order: 3;
+      display: flex;
+      align-items: flex-end;
     }
   }
 }
 
 .weather {
   margin-left: 1.8rem;
-  @include respond(smaller) {
-    order: 1;
-    margin-left: 0;
-  }
 
   @include center;
   flex-direction: column;
+
+  @include respond(smallest) {
+    display: none;
+  }
+
+  &--mobile {
+    display: none;
+    margin-left: 0;
+    @include respond(smallest) {
+      display: flex;
+    }
+  }
+
+  &__text {
+    margin-top: -1.8rem;
+  }
 }
 
 .celcius {

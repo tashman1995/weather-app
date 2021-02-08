@@ -1,4 +1,6 @@
 import React from "react";
+import { useMediaQuery } from "react-responsive";
+
 import {
   WiCloudy,
   WiShowers,
@@ -18,33 +20,35 @@ import moment from "moment";
 import "./style.scss";
 
 const HeroData = ({ location, temp, weatherType, sunText, date, daytime }) => {
+const isMobile = useMediaQuery({ query: `(max-width: 600px)` });
+
   const iconsDay = {
-    clear: <WiDaySunny size={120} />,
-    fewclouds: <WiDayCloudy size={120} />,
-    clouds: <WiCloudy size={120} />,
-    scatteredclouds: <WiDayCloudy size={120} />,
-    brokenclouds: <WiDayCloudy size={120} />,
-    showerrain: <WiShowers size={120} />,
-    rain: <WiRain size={120} />,
-    thunderstorm: <WiStormShowers size={120} />,
-    snow: <WiSnow size={120} />,
-    mist: <WiFog size={120} />,
-    haze: <WiDayHaze size={120} />,
-    loading: <WiDaySunny size={120} />,
+    clear: <WiDaySunny size={isMobile ? 80 : 120} />,
+    fewclouds: <WiDayCloudy size={isMobile ? 80 : 120} />,
+    clouds: <WiCloudy size={isMobile ? 80 : 120} />,
+    scatteredclouds: <WiDayCloudy size={isMobile ? 80 : 120} />,
+    brokenclouds: <WiDayCloudy size={isMobile ? 80 : 120} />,
+    showerrain: <WiShowers size={isMobile ? 80 : 120} />,
+    rain: <WiRain size={isMobile ? 80 : 120} />,
+    thunderstorm: <WiStormShowers size={isMobile ? 80 : 120} />,
+    snow: <WiSnow size={isMobile ? 80 : 120} />,
+    mist: <WiFog size={isMobile ? 80 : 120} />,
+    haze: <WiDayHaze size={isMobile ? 80 : 120} />,
+    loading: <WiDaySunny size={isMobile ? 80 : 120} />,
   };
   const iconsNight = {
-    clear: <WiNightClear size={120} />,
-    fewclouds: <WiNightAltCloudy size={120} />,
-    clouds: <WiNightAltCloudy size={120} />,
-    scatteredclouds: <WiNightAltCloudy size={120} />,
-    brokenclouds: <WiNightAltCloudy size={120} />,
-    showerrain: <WiNightAltShowers size={120} />,
-    rain: <WiNightAltShowers size={120} />,
-    thunderstorm: <WiStormShowers size={120} />,
-    snow: <WiNightAltSnow size={120} />,
-    mist: <WiFog size={120} />,
-    haze: <WiFog size={120} />,
-    loading: <WiNightClear size={120} />,
+    clear: <WiNightClear size={isMobile ? 80 : 120} />,
+    fewclouds: <WiNightAltCloudy size={isMobile ? 80 : 120} />,
+    clouds: <WiNightAltCloudy size={isMobile ? 80 : 120} />,
+    scatteredclouds: <WiNightAltCloudy size={isMobile ? 80 : 120} />,
+    brokenclouds: <WiNightAltCloudy size={isMobile ? 80 : 120} />,
+    showerrain: <WiNightAltShowers size={isMobile ? 80 : 120} />,
+    rain: <WiNightAltShowers size={isMobile ? 80 : 120} />,
+    thunderstorm: <WiStormShowers size={isMobile ? 80 : 120} />,
+    snow: <WiNightAltSnow size={isMobile ? 80 : 120} />,
+    mist: <WiFog size={isMobile ? 80 : 120} />,
+    haze: <WiFog size={isMobile ? 80 : 120} />,
+    loading: <WiNightClear size={isMobile ? 80 : 120} />,
   };
   return (
     <div className="hero-data">
@@ -58,25 +62,32 @@ const HeroData = ({ location, temp, weatherType, sunText, date, daytime }) => {
           <h2 className="heading-secondary">{temp.average}</h2>
           <div className="celcius"></div>
         </div>
-
+        {/* Geographic Locationand sunset sunrise data */}
         <div className="hero-data__detail">
           <div className="hero-data__location">
-            <h3
-              className={` heading-tertiary ${
-                location && location.length > 9 && "heading-tertiary--small"
+            <h1
+              className={` heading-primary ${
+                location && location.length > 9 && "heading-primary--small"
               }`}>
               {location}
-            </h3>
+            </h1>
             <p className="paragraph hero-data__date">{sunText}</p>
           </div>
-        </div>
-        <div className="weather">
-          <div className="weather__icon">
-            {
-              ( weatherType && daytime === "day"
+          <div className="weather weather--mobile">
+            <div className="weather__icon">
+              {weatherType && daytime === "day"
                 ? iconsDay[weatherType.replace(/\s+/g, "").toLowerCase()]
-                : iconsNight[weatherType.replace(/\s+/g, "").toLowerCase()])
-            }
+                : iconsNight[weatherType.replace(/\s+/g, "").toLowerCase()]}
+            </div>
+            <div className="paragraph weather__text">{weatherType}</div>
+          </div>
+        </div>
+        {/* Weather Icon and type windows */}
+        <div className="weather ">
+          <div className="weather__icon">
+            {weatherType && daytime === "day"
+              ? iconsDay[weatherType.replace(/\s+/g, "").toLowerCase()]
+              : iconsNight[weatherType.replace(/\s+/g, "").toLowerCase()]}
           </div>
           <div className="paragraph weather__text">{weatherType}</div>
         </div>

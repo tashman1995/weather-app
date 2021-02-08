@@ -6,9 +6,16 @@ import { FaTimes } from "react-icons/fa";
 import "./style.scss";
 import { IconContext } from "react-icons/lib";
 
-const SideBar = ({ weatherData, setQuery, search, query, error }) => {
+const SideBar = ({
+  weatherData,
+  setQuery,
+  search,
+  query,
+  error,
+  setOpen,
+  open,
+}) => {
   const sidebar = useRef();
-  const [open, setOpen] = useState(false);
   const [weatherDetails, setWeatherDetails] = useState({
     cloud: 0,
     humidity: 0,
@@ -29,7 +36,6 @@ const SideBar = ({ weatherData, setQuery, search, query, error }) => {
     const handleClickOff = (e) => {
       if (sidebar.current) {
         if (sidebar.current.contains(e.target)) {
-          //  exit if inside click
           return;
         }
         // outside click
@@ -38,7 +44,7 @@ const SideBar = ({ weatherData, setQuery, search, query, error }) => {
     };
     // add when mounted
     document.addEventListener("mousedown", handleClickOff);
-    // return function to be called when unmounted
+    // remove when unmounted
     return () => {
       document.removeEventListener("mousedown", handleClickOff);
     };
@@ -100,13 +106,17 @@ const SideBar = ({ weatherData, setQuery, search, query, error }) => {
                   disabled={!open && true}
                   tabIndex={!open ? -1 : ""}
                   className="search__btn"
-                  onClick={() => search({key: "Enter"})}>
+                  onClick={() => search({ key: "Enter" })}>
                   <BiSearch />
                 </button>
               </IconContext.Provider>
             </div>
           </div>
-          {error && <label htmlFor="search" className="search__error">City not found</label>}
+          {error && (
+            <label htmlFor="search" className="search__error">
+              City not found
+            </label>
+          )}
           <div className="weather-details">
             <h3 className="paragraph weather-details__heading">
               Weather Details

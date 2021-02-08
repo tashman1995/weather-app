@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import HeroSection from "./components/HeroSection";
 import SideBar from "./components/SideBar";
 import axios from "axios";
@@ -18,9 +19,14 @@ function App() {
   const [weather, setWeather] = useState({});
   const [error, setError] = useState(false);
 
+  // Opening and closing Sidebar
+  const [open, setOpen] = useState(false);
+
+  // Media Query
+  const isMobile = useMediaQuery({ query: `(max-width: 600px)` });
+
   // Search Weather Function
   const search = (evt) => {
-
     if (evt) {
       if (evt.key === "Enter") {
         fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
@@ -29,6 +35,7 @@ function App() {
             if (!result.message) {
               setError(false);
               updateResults(result);
+              isMobile && setOpen(false);
             } else {
               setError(true);
             }
@@ -103,6 +110,8 @@ function App() {
         search={search}
         query={query}
         error={error}
+        open={open}
+        setOpen={setOpen}
       />
     </div>
   );

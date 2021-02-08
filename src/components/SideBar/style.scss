@@ -81,6 +81,11 @@ $padding: 5rem;
     color: rgb(255, 102, 102);
     font-size: 1.4rem;
     margin-top: -3.4rem;
+
+    @include respond(smaller) {
+      font-size: 2.2rem;
+      margin-top: -5rem;
+    }
   }
 
   &__btn {

@@ -7,7 +7,7 @@ import axios from "axios";
 import "./style/main.scss";
 
 const api = {
-  key: "ae679129939d38219cf4d55a044415ba",
+  key: "6ae5f773da4211cd6fa8269fe8598983",
   base: "https://api.openweathermap.org/data/2.5/",
 };
 
@@ -29,37 +29,22 @@ function App() {
   const search = (evt) => {
     if (evt) {
       if (evt.key === "Enter") {
-        // axios
-        //   .get(api.base, {
-        //     params: {
-        //       q: query,
-        //       units: "metric",
-        //       APPID: api.key,
-        //     },
-        //   })
-        //   .then((res) => {
-        //     console.log(res);
-        //   })
-        //   .catch((error) => console.log(`Error: ${error}`));
-        fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
-          .then((res) => res.json())
-          .then((result) => {
-            if (!result.message) {
-              setError(false);
-              updateResults(result);
-              isMobile && setOpen(false);
-            } else {
-              setError(true);
-            }
-          });
+        axios
+          .get(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
+          .then((res) => {
+            setError(false);
+            updateResults(res);
+            isMobile && setOpen(false);
+          })
+          .catch(() => setError(true));
       }
     }
   };
 
   // Handle updating state with search results
   const updateResults = (result) => {
-    setWeather(result);
-    setLocation(result.name);
+    setWeather(result.data);
+    setLocation(result.data.name);
     setQuery("");
   };
 
@@ -98,19 +83,22 @@ function App() {
 
         setLocation(positionDetails.data.results[0].locations[0].adminArea5);
       } catch (err) {
-        console.log(err.message);
+        console.error(err.message);
       }
     };
 
     loadPosition();
 
-    fetch(
-      `${api.base}weather?lat=${longLat[1]}&lon=${longLat[0]}&units=metric&appid=${api.key}`
-    )
-      .then((res) => res.json())
-      .then((result) => {
-        updateResults(result);
-      });
+    axios
+      .get(
+        `${api.base}weather?lat=${longLat[1]}&lon=${longLat[0]}&units=metric&APPID=${api.key}`
+      )
+      .then((res) => {
+        setError(false);
+        updateResults(res);
+        isMobile && setOpen(false);
+      })
+      .catch(() => setError(true));
   }, []);
 
   return (

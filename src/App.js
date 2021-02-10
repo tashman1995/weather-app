@@ -8,7 +8,7 @@ import axios from "axios";
 import "./style/main.scss";
 
 const api = {
-  key: "6ae5f773da4211cd6fa8269fe8598983",
+  key: "ae679129939d38219cf4d55a044415ba",
   base: "https://api.openweathermap.org/data/2.5/",
 };
 
